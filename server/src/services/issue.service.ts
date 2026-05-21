@@ -20,22 +20,43 @@ export const getIssuesService = async (query: any) => {
     }
 
     // 3. Text Search using Regex ($or operator checks multiple fields)
-    if (query.serach) {
-        dbQuery.$or = [
-            {title: {$regex: query.search, $options: 'i'}},
-            {description: {$regex: query.search, $options: 'i'}},
-        ];
+    if (query.search) {
+        dbQuery.$or = [{title: {$regex: query.search, $options: 'i'}}, {
+            description: {
+                $regex: query.search,
+                $options: 'i'
+            }
+        },];
     }
 
-    // 4. Execute the query against the database
-    // Note: We use .populate() to get the actual user details instead of just the ObjectId
+    //2. Pagination Math
+    //We use fallback defaults: page 1 and limit 10 if the user dosent't provide them
+    const page = parseInt(query.page as string) || 1;
+    const limit = parseInt(query.limit as string) || 10;
+    const skip = (page - 1) * limit;
+
+    // 3. Execute the paginated query
+    // Notice we added .skip() and .limit()
     const issues = await Issue.find(dbQuery)
         .populate('createdBy', 'username email profileImage')
         .populate('assignedTo', 'username email profileImage')
-        .sort({createdAt: -1}); // Sort by newest first
+        .sort({createdAt: -1})
+        .skip(skip)
+        .limit(limit);
 
 
-    return issues;
+    //4. get the total count of documents that match the db query (for frontend pagination buttons)
+    const total = await Issue.countDocuments(dbQuery);
 
+    //5. return the data along with pagination metadata
 
-}
+    return {
+        issues,
+        meta:{
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total/limit),
+        },
+    };
+};
