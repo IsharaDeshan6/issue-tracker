@@ -23,8 +23,7 @@ export const getIssuesService = async (query: any) => {
     if (query.search) {
         dbQuery.$or = [{title: {$regex: query.search, $options: 'i'}}, {
             description: {
-                $regex: query.search,
-                $options: 'i'
+                $regex: query.search, $options: 'i'
             }
         },];
     }
@@ -51,12 +50,8 @@ export const getIssuesService = async (query: any) => {
     //5. return the data along with pagination metadata
 
     return {
-        issues,
-        meta:{
-            total,
-            page,
-            limit,
-            totalPages: Math.ceil(total/limit),
+        issues, meta: {
+            total, page, limit, totalPages: Math.ceil(total / limit),
         },
     };
 };

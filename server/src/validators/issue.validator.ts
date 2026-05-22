@@ -1,12 +1,12 @@
-import { z } from 'zod';
+import {z} from 'zod';
 
 export const issueSchema = z.object({
     body: z.object({
-        title: z.string({ message: 'Title is required' })
+        title: z.string({message: 'Title is required'})
             .min(3, 'Title must be at least 3 characters')
             .max(100, 'Title cannot exceed 100 characters'),
 
-        description: z.string({ message: 'Description is required' }),
+        description: z.string({message: 'Description is required'}),
 
         // Zod Enums ensures they only send valid statuses
         status: z.enum(['Open', 'In Progress', 'Resolved', 'Closed']).optional(),

@@ -7,7 +7,7 @@ import {loginSchema, registerSchema, validate} from "../validators/auth.validato
 const router = Router();
 
 //public routes
-router.post('/register',validate(registerSchema), registerUser);
+router.post('/register', validate(registerSchema), registerUser);
 router.post('/login', validate(loginSchema), loginUser);
 
 

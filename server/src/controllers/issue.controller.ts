@@ -7,8 +7,7 @@ import {asyncHandler} from "../utils/asyncHandler";
 export const createIssue = asyncHandler(async (req: AuthRequest, res: Response) => {
 
     const issueData = {
-        ...req.body,
-        createdBy: req.user?._id,
+        ...req.body, createdBy: req.user?._id,
     };
 
     const issue = await Issue.create(issueData);
@@ -41,29 +40,28 @@ export const getIssueById = asyncHandler(async (req: Request, res: Response): Pr
 
 export const updateIssue = asyncHandler(async (req: Request, res: Response): Promise<void> => {
 
-        const issue = await Issue.findByIdAndUpdate(req.params.id, req.body, {
-            returnDocument: "after",
-            runValidators: true,
-        });
+    const issue = await Issue.findByIdAndUpdate(req.params.id, req.body, {
+        returnDocument: "after", runValidators: true,
+    });
 
-        if (!issue) {
-            res.status(404).json({message: 'Issue Not Found'});
-            return;
-        }
+    if (!issue) {
+        res.status(404).json({message: 'Issue Not Found'});
+        return;
+    }
 
-        res.status(200).json(issue);
+    res.status(200).json(issue);
 
 });
 
 
 export const deleteIssue = asyncHandler(async (req: Request, res: Response): Promise<void> => {
 
-        const issue = await Issue.findByIdAndDelete(req.params.id);
-        if (!issue) {
-            res.status(404).json({message: 'Issue Not Found'});
-            return;
-        }
-        res.status(200).json({message: 'Issue Deleted Successfully'});
+    const issue = await Issue.findByIdAndDelete(req.params.id);
+    if (!issue) {
+        res.status(404).json({message: 'Issue Not Found'});
+        return;
+    }
+    res.status(200).json({message: 'Issue Deleted Successfully'});
 
 });
 
