@@ -4,7 +4,26 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>client</title>
+    <title>Trackora — Issue Tracker</title>
+    <meta name="description" content="Track, manage, and resolve issues with Trackora — a modern issue tracking platform." />
+
+    <!-- Inline script: apply dark class SYNCHRONOUSLY before React loads to prevent flash -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('trackora-theme');
+          var theme = stored ? JSON.parse(stored)?.state?.theme : 'dark';
+          if (theme === 'dark' || !theme) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {
+          // Default to dark if anything goes wrong
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
