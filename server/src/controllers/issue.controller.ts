@@ -27,7 +27,6 @@ export const getIssueById = asyncHandler(async (req: Request, res: Response): Pr
 
     const issue = await Issue.findById(req.params.id)
         .populate('createdBy', 'username email')
-        .populate('updatedBy', 'username email')
 
     if (!issue) {
         res.status(404).json({message: 'Issue Not Found'});

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Plus, Search, Filter, MoreHorizontal, Trash2, Edit2,
-  ChevronLeft, ChevronRight, SlidersHorizontal, X, RefreshCw
+  Plus, Search, MoreHorizontal, Trash2, Edit2,
+  ChevronLeft, ChevronRight, SlidersHorizontal, X, RefreshCw, Download
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,6 +29,7 @@ import { toast } from 'sonner';
 import { formatDistanceToNow } from 'date-fns';
 
 export const IssueList = () => {
+  const navigate = useNavigate();
   const [issues, setIssues] = useState<Issue[]>([]);
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
@@ -88,6 +89,48 @@ export const IssueList = () => {
     setSearchInput('');
   };
 
+  const exportJSON = () => {
+    if (issues.length === 0) {
+      toast.error('No issues to export');
+      return;
+    }
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(issues, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "issues_export.json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+    toast.success('Exported to JSON successfully');
+  };
+
+  const exportCSV = () => {
+    if (issues.length === 0) {
+      toast.error('No issues to export');
+      return;
+    }
+    const headers = ["ID", "Title", "Description", "Status", "Priority", "Severity", "Created By", "Created At"];
+    const rows = issues.map(issue => [
+      issue._id,
+      `"${issue.title.replace(/"/g, '""')}"`,
+      `"${issue.description.replace(/"/g, '""')}"`,
+      issue.status,
+      issue.priority,
+      issue.severity,
+      `"${issue.createdBy?.username || 'Unknown'}"`,
+      new Date(issue.createdAt).toISOString()
+    ]);
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", encodedUri);
+    downloadAnchorNode.setAttribute("download", "issues_export.csv");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+    toast.success('Exported to CSV successfully');
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -104,9 +147,24 @@ export const IssueList = () => {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" onClick={fetchIssues} className="h-9 w-9 border-border/70">
+          <Button variant="outline" size="icon" onClick={fetchIssues} className="h-9 w-9 border-border/70" title="Refresh">
             <RefreshCw className="w-4 h-4" />
           </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" className="h-9 w-9 border-border/70" title="Export">
+                <Download className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={exportCSV} className="cursor-pointer">
+                Export to CSV
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={exportJSON} className="cursor-pointer">
+                Export to JSON
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Link to="/issues/new">
             <Button className="gap-2 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 hover:-translate-y-0.5 transition-all">
               <Plus className="w-4 h-4" /> New Issue
@@ -308,7 +366,10 @@ export const IssueList = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-40">
-                        <DropdownMenuItem className="gap-2 text-sm cursor-pointer">
+                        <DropdownMenuItem
+                          className="gap-2 text-sm cursor-pointer"
+                          onClick={() => navigate(`/issues/${issue._id}/edit`)}
+                        >
                           <Edit2 className="w-3.5 h-3.5" /> Edit
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
@@ -333,7 +394,12 @@ export const IssueList = () => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem className="gap-2 cursor-pointer"><Edit2 className="w-3.5 h-3.5" /> Edit</DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="gap-2 cursor-pointer"
+                            onClick={() => navigate(`/issues/${issue._id}/edit`)}
+                          >
+                            <Edit2 className="w-3.5 h-3.5" /> Edit
+                          </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem className="gap-2 text-destructive focus:text-destructive cursor-pointer" onClick={() => setDeleteId(issue._id)}>
                             <Trash2 className="w-3.5 h-3.5" /> Delete

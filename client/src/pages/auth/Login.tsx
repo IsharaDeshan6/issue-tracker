@@ -73,9 +73,9 @@ export const Login = () => {
         <div className="space-y-1.5">
           <div className="flex justify-between items-center">
             <label className="text-sm font-medium text-foreground">Password</label>
-            <button type="button" className="text-xs text-primary hover:text-primary/80 font-medium transition-colors">
-              Forgot password?
-            </button>
+            {/*<button type="button" className="text-xs text-primary hover:text-primary/80 font-medium transition-colors">*/}
+            {/*  Forgot password?*/}
+            {/*</button>*/}
           </div>
           <div className="relative">
             <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />

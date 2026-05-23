@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
-  DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger
+  DropdownMenuSeparator, DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
@@ -151,18 +151,17 @@ export const DashboardLayout = () => {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" align="start" className="w-56 mb-1 ml-2">
-                <DropdownMenuLabel>
-                  <div>
-                    <p className="font-semibold">{user?.username}</p>
-                    <p className="text-xs text-muted-foreground font-normal">{user?.email}</p>
-                  </div>
-                </DropdownMenuLabel>
+                {/* Plain div avoids DropdownMenuLabel's Base UI MenuGroupContext crash */}
+                <div className="px-2 py-1.5 mb-1">
+                  <p className="text-sm font-semibold text-foreground">{user?.username}</p>
+                  <p className="text-xs text-muted-foreground">{user?.email}</p>
+                </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="gap-2 cursor-pointer">
+                <DropdownMenuItem className="gap-2 cursor-pointer" onClick={() => navigate('/profile')}>
                   <User className="w-4 h-4" /> Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem className="gap-2 cursor-pointer">
-                  <Settings className="w-4 h-4" /> Settings
+                <DropdownMenuItem className="gap-2 cursor-pointer" onClick={() => navigate('/settings')}>
+                  <Settings className="w-4 h-4" /> Account Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout} className="gap-2 text-destructive focus:text-destructive cursor-pointer">

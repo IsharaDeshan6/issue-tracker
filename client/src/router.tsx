@@ -7,6 +7,9 @@ import { Register } from './pages/auth/Register';
 import { Dashboard } from './pages/dashboard/Dashboard';
 import { IssueList } from './pages/issues/IssueList';
 import { CreateIssue } from './pages/issues/CreateIssue';
+import { EditIssue } from './pages/issues/EditIssue';
+import { Profile } from './pages/account/Profile';
+import { Settings } from './pages/account/Settings';
 
 export const router = createBrowserRouter([
   // Root redirect: "/" goes to /login if not authenticated (ProtectedRoute handles it)
@@ -26,6 +29,9 @@ export const router = createBrowserRouter([
           { path: '/', element: <Dashboard /> },
           { path: '/issues', element: <IssueList /> },
           { path: '/issues/new', element: <CreateIssue /> },
+          { path: '/issues/:id/edit', element: <EditIssue /> },
+          { path: '/profile', element: <Profile /> },
+          { path: '/settings', element: <Settings /> },
         ],
       },
     ],
