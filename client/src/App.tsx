@@ -19,7 +19,7 @@ function App() {
   }, [theme]);
 
   return (
-    <TooltipProvider delayDuration={300}>
+    <TooltipProvider>
       <RouterProvider router={router} />
       <Toaster position="bottom-right" richColors closeButton />
     </TooltipProvider>

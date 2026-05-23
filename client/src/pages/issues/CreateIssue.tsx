@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,9 +20,9 @@ import { cn } from '@/lib/utils';
 const issueSchema = z.object({
   title: z.string().min(3, 'Title must be at least 3 characters').max(100, 'Title too long'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
-  status: z.enum(['Open', 'In Progress', 'Resolved', 'Closed']).default('Open'),
-  priority: z.enum(['Low', 'Medium', 'High', 'Critical']).default('Medium'),
-  severity: z.enum(['Minor', 'Major', 'Critical']).default('Minor'),
+  status: z.enum(['Open', 'In Progress', 'Resolved', 'Closed']),
+  priority: z.enum(['Low', 'Medium', 'High', 'Critical']),
+  severity: z.enum(['Minor', 'Major', 'Critical']),
 });
 type IssueForm = z.infer<typeof issueSchema>;
 

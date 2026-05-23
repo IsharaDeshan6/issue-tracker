@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   ListChecks, CheckCircle2, Clock, AlertTriangle, XCircle,
-  TrendingUp, Plus, ArrowUpRight, Activity, Loader2
+  TrendingUp, Plus, ArrowUpRight, Activity
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,7 @@ const stagger = {
   hidden: {},
   show: { transition: { staggerChildren: 0.07 } },
 };
-const fadeUp = {
+const fadeUp: any = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
 };

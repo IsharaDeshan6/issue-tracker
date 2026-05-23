@@ -8,7 +8,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue
@@ -151,8 +150,8 @@ export const IssueList = () => {
             <RefreshCw className="w-4 h-4" />
           </Button>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" className="h-9 w-9 border-border/70" title="Export">
+            <DropdownMenuTrigger>
+              <Button variant="outline" size="sm" className="h-8 gap-2 border-border/70 text-muted-foreground bg-background">
                 <Download className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -360,8 +359,8 @@ export const IssueList = () => {
                       {formatDistanceToNow(new Date(issue.createdAt), { addSuffix: true })}
                     </span>
                     <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <DropdownMenuTrigger>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity">
                           <MoreHorizontal className="w-4 h-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -388,8 +387,8 @@ export const IssueList = () => {
                     <div className="flex items-start justify-between mb-2.5">
                       <p className="text-sm font-semibold text-foreground flex-1 mr-2 leading-snug">{issue.title}</p>
                       <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-7 w-7 flex-shrink-0">
+                        <DropdownMenuTrigger>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 border border-border/50 text-muted-foreground shadow-sm">
                             <MoreHorizontal className="w-4 h-4" />
                           </Button>
                         </DropdownMenuTrigger>

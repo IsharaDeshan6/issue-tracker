@@ -136,8 +136,8 @@ export const DashboardLayout = () => {
           {/* User Profile */}
           <div className="p-3 border-t border-border flex-shrink-0">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex w-full items-center gap-3 p-2.5 rounded-xl hover:bg-sidebar-accent transition-all duration-150 group">
+              <DropdownMenuTrigger>
+                <div className="flex w-full items-center gap-3 p-2.5 rounded-xl hover:bg-sidebar-accent transition-all duration-150 group cursor-pointer">
                   <Avatar className="h-8 w-8 border border-border">
                     <AvatarFallback className="bg-primary/10 text-primary text-xs font-bold">
                       {initials}
@@ -148,7 +148,7 @@ export const DashboardLayout = () => {
                     <p className="text-xs text-muted-foreground truncate capitalize">{user?.role}</p>
                   </div>
                   <ChevronRight className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                </button>
+                </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" align="start" className="w-56 mb-1 ml-2">
                 {/* Plain div avoids DropdownMenuLabel's Base UI MenuGroupContext crash */}
@@ -200,19 +200,19 @@ export const DashboardLayout = () => {
           <div className="flex items-center gap-2 ml-auto">
             {/* Notification bell */}
             <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-9 w-9 relative">
+              <TooltipTrigger>
+                <div className="h-9 w-9 relative flex items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground">
                   <Bell className="w-4 h-4" />
                   <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full border border-background" />
-                </Button>
+                </div>
               </TooltipTrigger>
               <TooltipContent>Notifications</TooltipContent>
             </Tooltip>
 
             {/* Theme toggle */}
             <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-9 w-9" onClick={toggleTheme}>
+              <TooltipTrigger>
+                <div className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer" onClick={toggleTheme}>
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={theme}
@@ -224,7 +224,7 @@ export const DashboardLayout = () => {
                       {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                     </motion.div>
                   </AnimatePresence>
-                </Button>
+                </div>
               </TooltipTrigger>
               <TooltipContent>{theme === 'dark' ? 'Light mode' : 'Dark mode'}</TooltipContent>
             </Tooltip>

@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Moon, Sun, Bell, Shield, Palette, Monitor } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { useThemeStore } from '../../store/useAuthStore';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
