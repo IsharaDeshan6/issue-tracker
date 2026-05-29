@@ -4,6 +4,7 @@ import { router } from './router';
 import { useThemeStore } from './store/useAuthStore';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { Analytics } from '@vercel/analytics/react';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
     <TooltipProvider>
       <RouterProvider router={router} />
       <Toaster position="bottom-right" richColors closeButton />
+      <Analytics />
     </TooltipProvider>
   );
 }
